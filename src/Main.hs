@@ -11,6 +11,14 @@ solve (board) (input) = solveObvious (solveInitials board input) input
 
 solveObvious :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
 solveObvious (board) [] = board
+solveObvious (board) (krotka:more) = solveObvious (solveSingleObvious board krotka) more
+
+solveSingleObvious :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
+solveSingleObvious (board) ((row,column),0) = board
+solveSingleObvious (board) ((row,column),1) = board
+solveSingleObvious (board) ((row,column),2) = board
+solveSingleObvious (board) ((row,column),3) = board
+solveSingleObvious (board) ((row,column),4) = board
 
 solveInitials :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
 solveInitials (board) [] = board
