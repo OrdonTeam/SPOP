@@ -7,8 +7,8 @@ initialBoard = [[2,2,2,2],[2,2,2,2],[2,2,2,2],[2,2,2,2]]
 main = print(solve initialBoard input)
 
 solve :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
-solve (board) [krotka] = board
-solve (board) (krotka:moore) = solve (solveKrotke board krotka) moore
+solve (board) [] = board
+solve (board) (krotka:more) = solve (solveKrotke board krotka) more
 
 solveKrotke :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
 solveKrotke (board) ((row,column),0) = sloveZero board row column
@@ -21,5 +21,8 @@ sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
 sloveZero (board) (row) (column) = setToEmpty board [] 2 2
 
 setToEmpty :: [[Integer]] -> [[Integer]] -> Integer -> Integer -> [[Integer]]
-setToEmpty (board) (accumulator) (0) (column) = board
-setToEmpty (board) (accumulator) (row) (column) = board
+setToEmpty [] (accumulator) (rowIndex) (column) = accumulator
+setToEmpty (row:board) (accumulator) (0) (column) = setToEmpty board (accumulator ++ [[0,0,0,0]]) (-1) column
+setToEmpty (row:board) (accumulator) (rowIndex) (column) = setToEmpty board (accumulator ++ [row]) (rowIndex-1) column
+
+--[1,1] : 2   -> [1,1,2]
