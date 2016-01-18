@@ -11,11 +11,15 @@ solve (board) [krotka] = board
 solve (board) (krotka:moore) = solve (solveKrotke board krotka) moore
 
 solveKrotke :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
-solveKrotke (board) ((x,y),0) = sloveZero board x y
-solveKrotke (board) ((x,y),1) = board
-solveKrotke (board) ((x,y),2) = board
-solveKrotke (board) ((x,y),3) = board
-solveKrotke (board) ((x,y),4) = board
+solveKrotke (board) ((row,column),0) = sloveZero board row column
+solveKrotke (board) ((row,column),1) = board
+solveKrotke (board) ((row,column),2) = board
+solveKrotke (board) ((row,column),3) = board
+solveKrotke (board) ((row,column),4) = board
 
 sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
-sloveZero (board) (x) (y) = board
+sloveZero (board) (row) (column) = setToEmpty board [] 2 2
+
+setToEmpty :: [[Integer]] -> [[Integer]] -> Integer -> Integer -> [[Integer]]
+setToEmpty (board) (accumulator) (0) (column) = board
+setToEmpty (board) (accumulator) (row) (column) = board
