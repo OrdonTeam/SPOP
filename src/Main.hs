@@ -18,11 +18,14 @@ solveKrotke (board) ((row,column),3) = board
 solveKrotke (board) ((row,column),4) = board
 
 sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
-sloveZero (board) (row) (column) = setToEmpty board [] 2 2
+sloveZero (board) (row) (column) = setToEmpty board [] (row-1) (column-1)
 
 setToEmpty :: [[Integer]] -> [[Integer]] -> Integer -> Integer -> [[Integer]]
 setToEmpty [] (accumulator) (rowIndex) (column) = accumulator
-setToEmpty (row:board) (accumulator) (0) (column) = setToEmpty board (accumulator ++ [[0,0,0,0]]) (-1) column
+setToEmpty (row:board) (accumulator) (0) (column) = setToEmpty board (accumulator ++ [(setToEmptyInRow row [] column)]) (-1) column
 setToEmpty (row:board) (accumulator) (rowIndex) (column) = setToEmpty board (accumulator ++ [row]) (rowIndex-1) column
 
---[1,1] : 2   -> [1,1,2]
+setToEmptyInRow :: [Integer] -> [Integer] -> Integer -> [Integer]
+setToEmptyInRow [] (accumulator) (column) = accumulator
+setToEmptyInRow (value:row) (accumulator) (0) = setToEmptyInRow row (accumulator ++ [0]) (-1)
+setToEmptyInRow (value:row) (accumulator) (column) = setToEmptyInRow row (accumulator ++ [value]) (column-1)
