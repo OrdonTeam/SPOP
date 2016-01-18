@@ -12,13 +12,37 @@ solve (board) (krotka:more) = solve (solveKrotke board krotka) more
 
 solveKrotke :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
 solveKrotke (board) ((row,column),0) = sloveZero board row column
-solveKrotke (board) ((row,column),1) = board
-solveKrotke (board) ((row,column),2) = board
+solveKrotke (board) ((row,column),1) = sloveOne board row column
+solveKrotke (board) ((row,column),2) = sloveTwo board row column
 solveKrotke (board) ((row,column),3) = board
 solveKrotke (board) ((row,column),4) = sloveFour board row column
 
 sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
 sloveZero (board) (row) (column) = setListToEmpty board [((row-1), (column-1)),((row), (column-1)),((row-1), (column)),((row), (column))]
+
+sloveOne :: [[Integer]] -> Integer -> Integer -> [[Integer]]
+sloveOne (board) (row) (column)
+                               | isCorner row column = setListToFull board [((row-1), (column-1)),((row), (column-1)),((row-1), (column)),((row), (column))]
+                               | otherwise = board
+
+isCorner :: Integer -> Integer -> Bool
+isCorner (0) (0) = True
+isCorner (4) (0) = True
+isCorner (0) (4) = True
+isCorner (4) (4) = True
+isCorner (_) (_) = False
+
+sloveTwo :: [[Integer]] -> Integer -> Integer -> [[Integer]]
+sloveTwo (board) (row) (column)
+                               | isEdge row column = setListToFull board [((row-1), (column-1)),((row), (column-1)),((row-1), (column)),((row), (column))]
+                               | otherwise = board
+
+isEdge :: Integer -> Integer -> Bool
+isEdge (0) (_) = True
+isEdge (4) (_) = True
+isEdge (_) (0) = True
+isEdge (_) (4) = True
+isEdge (_) (_) = False
 
 sloveFour :: [[Integer]] -> Integer -> Integer -> [[Integer]]
 sloveFour (board) (row) (column) = setListToFull board [((row-1), (column-1)),((row), (column-1)),((row-1), (column)),((row), (column))]
