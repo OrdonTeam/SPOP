@@ -4,18 +4,24 @@ import Data.Char
 input = [((1, 0), 1), ((1, 2), 2), ((2, 1), 4), ((2, 3), 1), ((3, 3), 1), ((4, 1), 0)]
 initialBoard = [[2,2,2,2],[2,2,2,2],[2,2,2,2],[2,2,2,2]]
 
-main = print(solve initialBoard input)
+main = print(solveInitials initialBoard input)
 
-solve :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
-solve (board) [] = board
-solve (board) (krotka:more) = solve (solveKrotke board krotka) more
+solve ::  [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
+solve (board) (input) = solveObvious (solveInitials board input) input
 
-solveKrotke :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
-solveKrotke (board) ((row,column),0) = sloveZero board row column
-solveKrotke (board) ((row,column),1) = sloveOne board row column
-solveKrotke (board) ((row,column),2) = sloveTwo board row column
-solveKrotke (board) ((row,column),3) = board
-solveKrotke (board) ((row,column),4) = sloveFour board row column
+solveObvious :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
+solveObvious (board) [] = board
+
+solveInitials :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
+solveInitials (board) [] = board
+solveInitials (board) (krotka:more) = solveInitials (solveSingleValue board krotka) more
+
+solveSingleValue :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
+solveSingleValue (board) ((row,column),0) = sloveZero board row column
+solveSingleValue (board) ((row,column),1) = sloveOne board row column
+solveSingleValue (board) ((row,column),2) = sloveTwo board row column
+solveSingleValue (board) ((row,column),3) = board
+solveSingleValue (board) ((row,column),4) = sloveFour board row column
 
 sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
 sloveZero (board) (row) (column) = setListToEmpty board [((row-1), (column-1)),((row), (column-1)),((row-1), (column)),((row), (column))]
