@@ -11,4 +11,11 @@ solve (board) [krotka] = board
 solve (board) (krotka:moore) = solve (solveKrotke board krotka) moore
 
 solveKrotke :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
-solveKrotke (board) (krotka) = board
+solveKrotke (board) ((x,y),0) = sloveZero board x y
+solveKrotke (board) ((x,y),1) = board
+solveKrotke (board) ((x,y),2) = board
+solveKrotke (board) ((x,y),3) = board
+solveKrotke (board) ((x,y),4) = board
+
+sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
+sloveZero (board) (x) (y) = board
