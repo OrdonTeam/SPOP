@@ -16,9 +16,22 @@ solveObvious (board) (krotka:more) = solveObvious (solveSingleObvious board krot
 solveSingleObvious :: [[Integer]] -> ((Integer, Integer), Integer) -> [[Integer]]
 solveSingleObvious (board) ((row,column),0) = board
 solveSingleObvious (board) ((row,column),1) = board
-solveSingleObvious (board) ((row,column),2) = board
+solveSingleObvious (board) ((row,column),2) = solveSingleObviousTwo board row column
 solveSingleObvious (board) ((row,column),3) = board
 solveSingleObvious (board) ((row,column),4) = board
+
+solveSingleObviousTwo :: [[Integer]] -> Integer -> Integer -> [[Integer]]
+solveSingleObviousTwo (board) (row) (column)
+                                            | isObviousTwo board row column = placeResultOfSingleObviousTwo board row column
+                                            | otherwise = board
+
+--TODO
+placeResultOfSingleObviousTwo :: [[Integer]] -> Integer -> Integer -> [[Integer]]
+placeResultOfSingleObviousTwo (board) (row) (column) = board
+
+--TODO
+isObviousTwo :: [[Integer]] -> Integer -> Integer -> Bool
+isObviousTwo (board) (row) (column) = False
 
 solveInitials :: [[Integer]] -> [((Integer, Integer), Integer)] -> [[Integer]]
 solveInitials (board) [] = board
