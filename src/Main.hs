@@ -18,7 +18,11 @@ solveKrotke (board) ((row,column),3) = board
 solveKrotke (board) ((row,column),4) = board
 
 sloveZero :: [[Integer]] -> Integer -> Integer -> [[Integer]]
-sloveZero (board) (row) (column) = setToEmpty board [] (row-1) (column-1)
+sloveZero (board) (row) (column) = setListToEmpty board [((row-1), (column-1))]
+
+setListToEmpty :: [[Integer]] -> [(Integer, Integer)] -> [[Integer]]
+setListToEmpty (board) [] = board
+setListToEmpty (board) ((row, column):more) = setListToEmpty (setToEmpty board [] row column) more
 
 setToEmpty :: [[Integer]] -> [[Integer]] -> Integer -> Integer -> [[Integer]]
 setToEmpty [] (accumulator) (rowIndex) (column) = accumulator
